@@ -40,7 +40,7 @@
         /* ─── Header ─── */
         .header-section {
             text-align: center;
-            padding: 56px 32px 20px;
+            padding: 56px 32px 10px;
         }
 
         .header-section h1 {
@@ -56,24 +56,43 @@
             font-size: 14px;
             color: #64748b;
             max-width: 560px;
-            margin: 0 auto 22px;
+            margin: 0 auto 16px;
             line-height: 1.65;
         }
 
-        .scroll-hint {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #94a3b8;
-            margin-bottom: 8px;
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 0 auto 24px;
+            padding: 0 32px;
+            flex-wrap: wrap;
         }
 
-        .scroll-hint .arrow {
-            font-size: 11px;
-            opacity: 0.7;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
         }
+
+        .legend-item .circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legend-item.full .circle { background: #4fd1a5; color: white; }
+        .legend-item.partial .circle { background: #fcd34d; color: #78350f; }
+        .legend-item.none .circle { background: #f9c4cb; color: #333333; }
+
+        .legend-item svg { width: 12px; height: 12px; }
 
         /* ─── Category Filter ─── */
         .category-filter {
@@ -147,12 +166,20 @@
             background: #ffffff;
         }
 
-        /* Featured column */
+        /* Featured column highlight */
+        .featured-col {
+            background: #4f7cfc12; /* Very subtle background for column instead of solid blue */
+            position: relative;
+            border-left: 1px solid #4f7cfc20;
+            border-right: 1px solid #4f7cfc20;
+        }
+
         thead th.featured-col {
             background: #4f7cfc;
             border-bottom-color: #4f7cfc;
             border-radius: 18px 18px 0 0;
-            position: relative;
+            border-left: none;
+            border-right: none;
         }
 
         thead th.featured-col::before {
@@ -209,7 +236,7 @@
         }
 
         .featured-col .tool-tagline {
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.70);
         }
 
         /* ─── Table Body ─── */
@@ -249,17 +276,9 @@
             white-space: nowrap;
         }
 
-        tbody tr:nth-child(even) td.feature-cell {
-            background: #fafbfe;
-        }
-
-        tbody tr:hover td.feature-cell {
-            background: #f8fafd;
-        }
-
-        tbody tr:nth-child(even):hover td.feature-cell {
-            background: #f3f6fb;
-        }
+        tbody tr:nth-child(even) td.feature-cell { background: #fafbfe; }
+        tbody tr:hover td.feature-cell { background: #f8fafd; }
+        tbody tr:nth-child(even):hover td.feature-cell { background: #f3f6fb; }
 
         td.feature-cell .info-icon {
             display: inline-flex;
@@ -277,11 +296,6 @@
             cursor: help;
         }
 
-        /* Featured column data */
-        td.featured-col {
-            background: #4f7cfc !important;
-        }
-
         /* ─── Check / X Circle Icons ─── */
         .icon-check,
         .icon-x,
@@ -289,9 +303,10 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         /* ── GREEN check circle ── */
@@ -301,8 +316,8 @@
         }
 
         .icon-check svg {
-            width: 15px;
-            height: 15px;
+            width: 16px;
+            height: 16px;
         }
 
         /* ── PINK / RED X circle ── */
@@ -323,27 +338,11 @@
         }
 
         .icon-partial svg {
-            width: 13px;
-            height: 13px;
+            width: 14px;
+            height: 14px;
         }
 
-        /* Featured column icon overrides */
-        td.featured-col .icon-check {
-            background: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
-        }
-
-        td.featured-col .icon-x {
-            background: rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        td.featured-col .icon-partial {
-            background: rgba(255, 255, 255, 0.22);
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        /* ─── Summary Rows (Best For / Pricing) ─── */
+        /* ─── Summary Rows (Pricing) ─── */
         .summary-label {
             text-align: left;
             padding-left: 28px;
@@ -371,6 +370,7 @@
         .summary-data.featured-col {
             background: #4169e0 !important;
             color: #ffffff;
+            border-bottom: 1px solid #4169e0;
         }
 
         /* ─── CTA Row ─── */
@@ -383,11 +383,12 @@
 
         .cta-cell {
             background: #f5f7fb !important;
-            padding: 18px 14px 24px;
+            padding: 24px 14px 28px;
         }
 
         .cta-cell.featured-col {
             background: #4169e0 !important;
+            border-radius: 0 0 18px 18px;
         }
 
         .cta-btn {
@@ -408,7 +409,7 @@
             background: #ffffff;
             color: #4f7cfc;
             border: 2px solid #ffffff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
 
         .cta-btn-primary:hover {
@@ -439,28 +440,10 @@
 
         /* ─── Responsive ─── */
         @media (max-width: 768px) {
-            body {
-                padding: 16px 8px 40px;
-            }
-
-            .header-section {
-                padding: 36px 16px 16px;
-            }
-
-            .comparison-card {
-                border-radius: 18px;
-            }
-
-            .table-container {
-                margin: 0 8px 8px;
-                border-radius: 14px;
-            }
-
-            td.feature-cell,
-            thead th.feature-header {
-                min-width: 150px;
-                width: 150px;
-            }
+            body { padding: 16px 8px 40px; }
+            .header-section { padding: 36px 16px 16px; }
+            .legend { gap: 16px; }
+            td.feature-cell, thead th.feature-header { min-width: 150px; width: 150px; }
         }
     </style>
 </head>
@@ -469,10 +452,29 @@
         <div class="comparison-card">
             <!-- Header -->
             <div class="header-section">
-                <h1>Much More than Just a Placement Platform</h1>
+                <h1>Comparison Overview</h1>
                 <p>Campus placement by Devcorp works hard to save you time and effort. See how we stack up with conventional placement solutions.</p>
-                <div class="scroll-hint">
-                    <span class="arrow">‹</span> Scroll to compare <span class="arrow">›</span>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend" id="legend">
+                <div class="legend-item full">
+                    <div class="circle">
+                        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <span>Full Feature Support</span>
+                </div>
+                <div class="legend-item partial">
+                    <div class="circle">
+                        <svg viewBox="0 0 14 14" fill="none"><path d="M3 7H11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+                    </div>
+                    <span>Partial / Custom Add-on</span>
+                </div>
+                <div class="legend-item none">
+                    <div class="circle">
+                        <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 2.5L9.5 9.5M9.5 2.5L2.5 9.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                    </div>
+                    <span>Feature Not Supported</span>
                 </div>
             </div>
 
@@ -497,9 +499,9 @@
 
     <script>
         /* ─── SVG Templates ─── */
-        const checkSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-        const xSVG = `<svg viewBox="0 0 12 12" fill="none"><path d="M2.5 2.5L9.5 9.5M9.5 2.5L2.5 9.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
-        const partialSVG = `<svg viewBox="0 0 14 14" fill="none"><path d="M3 7H11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+        const checkSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5L6.5 11.5L12.5 4.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+        const xSVG = `<svg viewBox="0 0 12 12" fill="none"><path d="M2.5 2.5L9.5 9.5M9.5 2.5L2.5 9.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>`;
+        const partialSVG = `<svg viewBox="0 0 14 14" fill="none"><path d="M3 7H11" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg>`;
 
         /* ─── Data ─── */
         const features = [
@@ -533,260 +535,72 @@
         const tools = [
             {
                 name: "Devcorp",
-                tagline: "Modern Campus Placement & ATS",
                 color: "#4f7cfc",
                 initial: "D",
-                best: "Colleges & Universities",
                 pricing: "₹149/user/yr + Flexible",
                 featured: true,
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "~",
-                    "AI Resume Parsing & Shortlisting": "~",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "✓",
-                    "Virtual Career Fairs": "✗",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "~",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "~",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "✓",
-                    "API Access": "✓",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✓",
-                    "Telegram Group Integration": "✓",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "✓",
-                    "Dedicated College Mobile App": "✓",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "~", "AI Resume Parsing & Shortlisting": "~", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "✓", "Virtual Career Fairs": "✗", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "~", "Real-Time Data Access": "✓", "Custom Report Builder": "~", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "✓", "API Access": "✓", "Dedicated Support Team": "✓", "Free Trial Available": "✓", "Telegram Group Integration": "✓", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "✓", "Dedicated College Mobile App": "✓",
                 }
             },
             {
                 name: "Superset",
-                tagline: "University Recruiting Platform",
                 color: "#6366f1",
                 initial: "S",
-                best: "Large Indian Universities",
                 pricing: "Custom",
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "✓",
-                    "AI Resume Parsing & Shortlisting": "✓",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "✓",
-                    "Virtual Career Fairs": "✓",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "✓",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "✓",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "~",
-                    "API Access": "~",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✗",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "~",
-                    "Dedicated College Mobile App": "~",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "✓", "AI Resume Parsing & Shortlisting": "✓", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "✓", "Virtual Career Fairs": "✓", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "✓", "Real-Time Data Access": "✓", "Custom Report Builder": "✓", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "~", "API Access": "~", "Dedicated Support Team": "✓", "Free Trial Available": "✗", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "~", "Dedicated College Mobile App": "~",
                 }
             },
             {
                 name: "LineupX",
-                tagline: "AI-Powered Placement Automation",
                 color: "#0ea5e9",
                 initial: "L",
-                best: "Mid-size Colleges",
                 pricing: "Custom",
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "✓",
-                    "AI Resume Parsing & Shortlisting": "✓",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "✓",
-                    "Virtual Career Fairs": "~",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "✓",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "~",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "~",
-                    "API Access": "~",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✗",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "~",
-                    "Dedicated College Mobile App": "~",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "✓", "AI Resume Parsing & Shortlisting": "✓", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "✓", "Virtual Career Fairs": "~", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "✓", "Real-Time Data Access": "✓", "Custom Report Builder": "~", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "~", "API Access": "~", "Dedicated Support Team": "✓", "Free Trial Available": "✗", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "~", "Dedicated College Mobile App": "~",
                 }
             },
             {
                 name: "Creatrix Campus",
-                tagline: "Cloud ERP + Placement System",
                 color: "#10b981",
                 initial: "C",
-                best: "Full ERP institutions",
                 pricing: "Custom",
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "✓",
-                    "AI Resume Parsing & Shortlisting": "~",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "✓",
-                    "Virtual Career Fairs": "✗",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "✓",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "✓",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "✓",
-                    "API Access": "✓",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✗",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "✗",
-                    "Dedicated College Mobile App": "✗",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "✓", "AI Resume Parsing & Shortlisting": "~", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "✓", "Virtual Career Fairs": "✗", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "✓", "Real-Time Data Access": "✓", "Custom Report Builder": "✓", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "✓", "API Access": "✓", "Dedicated Support Team": "✓", "Free Trial Available": "✗", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "✗", "Dedicated College Mobile App": "✗",
                 }
             },
             {
                 name: "Reculta",
-                tagline: "Data-Driven Placements",
                 color: "#f59e0b",
                 initial: "R",
-                best: "Analytics-focused Institutes",
                 pricing: "Custom",
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "~",
-                    "AI Resume Parsing & Shortlisting": "✓",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "✓",
-                    "Virtual Career Fairs": "~",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "✓",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "✓",
-                    "Mobile App (Student/TPO)": "~",
-                    "ERP / LMS Integration": "~",
-                    "API Access": "✓",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✗",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "~",
-                    "Dedicated College Mobile App": "✗",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "~", "AI Resume Parsing & Shortlisting": "✓", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "✓", "Virtual Career Fairs": "~", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "✓", "Real-Time Data Access": "✓", "Custom Report Builder": "✓", "Mobile App (Student/TPO)": "~", "ERP / LMS Integration": "~", "API Access": "✓", "Dedicated Support Team": "✓", "Free Trial Available": "✗", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "~", "Dedicated College Mobile App": "✗",
                 }
             },
             {
                 name: "Eklavvya",
-                tagline: "AI Interview & Assessment",
                 color: "#ec4899",
                 initial: "E",
-                best: "Interview Prep & Assessment",
                 pricing: "₹500–1500/student/yr",
                 features: {
-                    "Student Profile Management": "~",
-                    "Job Posting & Management": "✗",
-                    "Application Tracking (ATS)": "✗",
-                    "Offer Letter Management": "✗",
-                    "AI Resume Parsing & Shortlisting": "~",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "~",
-                    "Employer / Recruiter Portal": "~",
-                    "CRM for Corporate Relations": "✗",
-                    "Multi-Campus Outreach": "~",
-                    "Virtual Career Fairs": "✗",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "~",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "~",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "✓",
-                    "API Access": "✓",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✓",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "✗",
-                    "Dedicated College Mobile App": "✗",
+                    "Student Profile Management": "~", "Job Posting & Management": "✗", "Application Tracking (ATS)": "✗", "Offer Letter Management": "✗", "AI Resume Parsing & Shortlisting": "~", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "~", "Employer / Recruiter Portal": "~", "CRM for Corporate Relations": "✗", "Multi-Campus Outreach": "~", "Virtual Career Fairs": "✗", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "~", "Real-Time Data Access": "✓", "Custom Report Builder": "~", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "✓", "API Access": "✓", "Dedicated Support Team": "✓", "Free Trial Available": "✓", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "✗", "Dedicated College Mobile App": "✗",
                 }
             },
             {
                 name: "Zoho Recruit",
-                tagline: "General-Purpose ATS",
                 color: "#8b5cf6",
                 initial: "Z",
-                best: "Companies & Startups",
                 pricing: "Free + ₹1,250/mo+",
                 features: {
-                    "Student Profile Management": "✓",
-                    "Job Posting & Management": "✓",
-                    "Application Tracking (ATS)": "✓",
-                    "Offer Letter Management": "✓",
-                    "AI Resume Parsing & Shortlisting": "✓",
-                    "Automated Interview Scheduling": "✓",
-                    "Automated Notifications & Alerts": "✓",
-                    "Bulk Email / Communication": "✓",
-                    "Employer / Recruiter Portal": "✓",
-                    "CRM for Corporate Relations": "✓",
-                    "Multi-Campus Outreach": "~",
-                    "Virtual Career Fairs": "✗",
-                    "Placement Analytics Dashboard": "✓",
-                    "NAAC/NIRF Reports": "✗",
-                    "Real-Time Data Access": "✓",
-                    "Custom Report Builder": "✓",
-                    "Mobile App (Student/TPO)": "✓",
-                    "ERP / LMS Integration": "✓",
-                    "API Access": "✓",
-                    "Dedicated Support Team": "✓",
-                    "Free Trial Available": "✓",
-                    "Telegram Group Integration": "✗",
-                    "Email Notifications": "✓",
-                    "Real-Time Broadcast Messaging": "~",
-                    "Dedicated College Mobile App": "~",
+                    "Student Profile Management": "✓", "Job Posting & Management": "✓", "Application Tracking (ATS)": "✓", "Offer Letter Management": "✓", "AI Resume Parsing & Shortlisting": "✓", "Automated Interview Scheduling": "✓", "Automated Notifications & Alerts": "✓", "Bulk Email / Communication": "✓", "Employer / Recruiter Portal": "✓", "CRM for Corporate Relations": "✓", "Multi-Campus Outreach": "~", "Virtual Career Fairs": "✗", "Placement Analytics Dashboard": "✓", "NAAC/NIRF Reports": "✗", "Real-Time Data Access": "✓", "Custom Report Builder": "✓", "Mobile App (Student/TPO)": "✓", "ERP / LMS Integration": "✓", "API Access": "✓", "Dedicated Support Team": "✓", "Free Trial Available": "✓", "Telegram Group Integration": "✗", "Email Notifications": "✓", "Real-Time Broadcast Messaging": "~", "Dedicated College Mobile App": "~",
                 }
             }
         ];
 
         const categoryColors = {
-            "Core": "#6366f1",
-            "Automation": "#0ea5e9",
-            "Recruiter": "#f59e0b",
-            "Analytics": "#10b981",
-            "Integration": "#8b5cf6",
-            "Support": "#64748b",
-            "Communication": "#f97316",
+            "Core": "#6366f1", "Automation": "#0ea5e9", "Recruiter": "#f59e0b", "Analytics": "#10b981", "Integration": "#8b5cf6", "Support": "#64748b", "Communication": "#f97316",
         };
 
         let activeCategory = "All";
@@ -801,7 +615,6 @@
         function renderCategoryFilter() {
             const filterDiv = document.getElementById('categoryFilter');
             const categories = ["All", ...Object.keys(categoryColors)];
-
             categories.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'cat-btn' + (cat === 'All' ? ' active' : '');
@@ -856,10 +669,8 @@
             tools.forEach(tool => {
                 const th = document.createElement('th');
                 if (tool.featured) th.classList.add('featured-col');
-
                 const wrapper = document.createElement('div');
                 wrapper.className = 'tool-header';
-
                 const logo = document.createElement('div');
                 logo.className = 'tool-logo';
                 logo.textContent = tool.initial;
@@ -871,15 +682,12 @@
                     logo.style.color = tool.color;
                     logo.style.border = '2px solid ' + tool.color + '30';
                 }
-
                 const name = document.createElement('div');
                 name.className = 'tool-name';
                 name.textContent = tool.name;
-
                 const tagline = document.createElement('div');
                 tagline.className = 'tool-tagline';
                 tagline.textContent = tool.tagline;
-
                 wrapper.appendChild(logo);
                 wrapper.appendChild(name);
                 wrapper.appendChild(tagline);
@@ -887,13 +695,11 @@
                 headerRow.appendChild(th);
             });
 
-            // Feature rows (flat list — no category separators for cleaner look)
+            // Feature rows
             features.forEach(feat => {
                 const row = document.createElement('tr');
                 row.setAttribute('data-type', 'feature');
                 row.setAttribute('data-category', feat.category);
-
-                // Feature label
                 const feaTd = document.createElement('td');
                 feaTd.className = 'feature-cell';
                 feaTd.textContent = feat.label;
@@ -901,12 +707,9 @@
                     const infoSpan = document.createElement('span');
                     infoSpan.className = 'info-icon';
                     infoSpan.textContent = 'i';
-                    infoSpan.title = feat.label;
                     feaTd.appendChild(infoSpan);
                 }
                 row.appendChild(feaTd);
-
-                // Tool data cells
                 tools.forEach(tool => {
                     const td = document.createElement('td');
                     if (tool.featured) td.classList.add('featured-col');
@@ -914,12 +717,8 @@
                     td.appendChild(createIcon(val));
                     row.appendChild(td);
                 });
-
                 tbody.appendChild(row);
             });
-
-            // Best For row
-            addSummaryRow(tbody, 'Best Fit', tool => tool.best);
 
             // Pricing row
             addSummaryRow(tbody, 'Pricing', tool => tool.pricing);
@@ -929,30 +728,25 @@
             const ctaLabel = document.createElement('td');
             ctaLabel.className = 'cta-row-label';
             ctaRow.appendChild(ctaLabel);
-
             tools.forEach(tool => {
                 const td = document.createElement('td');
                 td.className = 'cta-cell';
                 if (tool.featured) td.classList.add('featured-col');
-
                 const btn = document.createElement('button');
                 btn.className = tool.featured ? 'cta-btn cta-btn-primary' : 'cta-btn cta-btn-secondary';
                 btn.textContent = tool.featured ? 'Get Started' : 'Learn More';
                 td.appendChild(btn);
                 ctaRow.appendChild(td);
             });
-
             tbody.appendChild(ctaRow);
         }
 
         function addSummaryRow(tbody, label, getValue) {
             const row = document.createElement('tr');
-
             const labelTd = document.createElement('td');
             labelTd.className = 'summary-label';
             labelTd.textContent = label;
             row.appendChild(labelTd);
-
             tools.forEach(tool => {
                 const td = document.createElement('td');
                 td.className = 'summary-data';
@@ -960,16 +754,10 @@
                 td.textContent = getValue(tool);
                 row.appendChild(td);
             });
-
             tbody.appendChild(row);
         }
 
-        // Run
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
+        init();
     </script>
 </body>
 </html>
