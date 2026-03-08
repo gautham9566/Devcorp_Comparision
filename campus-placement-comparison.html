@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Placement Software Comparison Chart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "'DM Sans', 'Segoe UI', sans-serif";
+            background: #060c1a;
+            color: #e2e8f0;
+            padding: 32px 16px 64px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 100px;
+            padding: 6px 18px;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #a5b4fc;
+            margin-bottom: 16px;
+        }
+
+        .header h1 {
+            font-size: clamp(24px, 5vw, 44px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 0 0 12px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 15px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-symbol {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .legend-symbol.full {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .legend-symbol.partial {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+        }
+
+        .legend-symbol.none {
+            background: rgba(226, 232, 240, 0.06);
+            color: #475569;
+        }
+
+        .legend-label {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 7px 16px;
+            border-radius: 100px;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            background: transparent;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.04em;
+        }
+
+        .category-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .category-btn.active {
+            border-width: 1.5px;
+            background-color: rgba(99, 102, 241, 0.13);
+            color: #a5b4fc;
+            border-color: #6366f1;
+        }
+
+        .category-btn[data-category].active {
+            border-color: var(--category-color);
+            background-color: var(--category-bg);
+            color: var(--category-color);
+        }
+
+        /* Table */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 860px;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: center;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.07);
+            transition: all 0.25s;
+            cursor: default;
+            min-width: 110px;
+        }
+
+        th.feature-header {
+            padding: 20px 20px;
+            text-align: left;
+            background: rgba(15, 23, 42, 0.95);
+            font-size: 11px;
+            color: #475569;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            width: 200px;
+            position: sticky;
+            left: 0;
+            z-index: 2;
+        }
+
+        th.hovered {
+            border-bottom-color: var(--tool-color, #6366f1);
+            background: var(--tool-bg, rgba(99, 102, 241, 0.09));
+        }
+
+        .tool-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tool-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--tool-color-light, rgba(99, 102, 241, 0.13));
+            border: 1.5px solid var(--tool-color-alpha, rgba(99, 102, 241, 0.33));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--tool-color, #6366f1);
+        }
+
+        .tool-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 3px;
+        }
+
+        .tool-tagline {
+            font-size: 10px;
+            color: #475569;
+            line-height: 1.3;
+        }
+
+        tbody tr {
+            background: transparent;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .category-row {
+            padding: 10px 20px 6px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: var(--category-bg, rgba(99, 102, 241, 0.06));
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .category-row.hidden {
+            display: none;
+        }
+
+        td {
+            padding: 12px 20px;
+            font-size: 13px;
+            color: #cbd5e1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        td.feature-cell {
+            position: sticky;
+            left: 0;
+            background: #060c1a;
+            z-index: 1;
+            white-space: nowrap;
+            padding: 12px 20px;
+        }
+
+        tbody tr:nth-child(even) td.feature-cell {
+            background: rgba(15, 20, 38, 0.98);
+        }
+
+        td.data-cell {
+            padding: 10px 8px;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        td.data-cell.hovered {
+            background: var(--tool-hover-bg, rgba(99, 102, 241, 0.05));
+        }
+
+        .feature-symbol {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .symbol-full {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .symbol-partial {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+        }
+
+        .symbol-none {
+            background: rgba(226, 232, 240, 0.06);
+            color: #475569;
+        }
+
+        .best-for-row {
+            padding: 14px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #475569;
+            background: rgba(99, 102, 241, 0.06);
+            border-top: 2px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .best-for-row.sticky {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+        }
+
+        .best-for-data {
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--tool-color, #6366f1);
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.06);
+            border-top: 2px solid rgba(99, 102, 241, 0.2);
+            line-height: 1.4;
+        }
+
+        .pricing-row {
+            padding: 12px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #475569;
+            background: rgba(15, 23, 42, 0.9);
+        }
+
+        .pricing-row.sticky {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+        }
+
+        .pricing-data {
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 11px;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, 0.9);
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #334155;
+        }
+
+        .hidden-row {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-badge">2025 Edition · 7 Platforms · 25 Features</div>
+            <h1>Campus Placement Software<br>Comparison Chart</h1>
+            <p>A side-by-side breakdown to help your team choose the right platform for your placement needs.</p>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <span class="legend-symbol full">✓</span>
+                <span class="legend-label">Fully Supported</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-symbol partial">◑</span>
+                <span class="legend-label">Partial / Add-on</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-symbol none">✗</span>
+                <span class="legend-label">Not Available</span>
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter" id="categoryFilter"></div>
+
+        <!-- Table -->
+        <div class="table-wrapper">
+            <table id="comparisonTable">
+                <thead>
+                    <tr id="toolHeaderRow"></tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <!-- Footer note -->
+        <p class="footer">
+            Data sourced from official product pages & user reviews · March 2026 · Hover over a platform column to highlight it
+        </p>
+    </div>
+
+    <script>
+        // Data
+        const features = [
+            { category: "Core", label: "Student Profile Management" },
+            { category: "Core", label: "Job Posting & Management" },
+            { category: "Core", label: "Application Tracking (ATS)" },
+            { category: "Core", label: "Offer Letter Management" },
+            { category: "Automation", label: "AI Resume Parsing & Shortlisting" },
+            { category: "Automation", label: "Automated Interview Scheduling" },
+            { category: "Automation", label: "Automated Notifications & Alerts" },
+            { category: "Automation", label: "Bulk Email / Communication" },
+            { category: "Recruiter", label: "Employer / Recruiter Portal" },
+            { category: "Recruiter", label: "CRM for Corporate Relations" },
+            { category: "Recruiter", label: "Multi-Campus Outreach" },
+            { category: "Recruiter", label: "Virtual Career Fairs" },
+            { category: "Analytics", label: "Placement Analytics Dashboard" },
+            { category: "Analytics", label: "NAAC/NIRF Reports" },
+            { category: "Analytics", label: "Real-Time Data Access" },
+            { category: "Analytics", label: "Custom Report Builder" },
+            { category: "Integration", label: "Mobile App (Student/TPO)" },
+            { category: "Integration", label: "ERP / LMS Integration" },
+            { category: "Integration", label: "API Access" },
+            { category: "Support", label: "Dedicated Support Team" },
+            { category: "Support", label: "Free Trial Available" },
+            { category: "Communication", label: "Telegram Group Integration" },
+            { category: "Communication", label: "Email Notifications" },
+            { category: "Communication", label: "Real-Time Broadcast Messaging" },
+            { category: "Communication", label: "Dedicated College Mobile App" },
+        ];
+
+        const tools = [
+            {
+                name: "Superset",
+                tagline: "India's Official University Recruiting Platform",
+                color: "#6366f1",
+                best: "Large Indian Universities",
+                pricing: "Custom",
+                support: "✦ Dedicated",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "✓",
+                    "AI Resume Parsing & Shortlisting": "✓",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "~",
+                    "AI Mock Interviews": "✗",
+                    "Anti-Cheating / Proctoring": "✗",
+                    "Technical Coding Tests": "✗",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "✓",
+                    "Virtual Career Fairs": "✓",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "✓",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "✓",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "~",
+                    "API Access": "~",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✗",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "~",
+                    "Dedicated College Mobile App": "~",
+                }
+            },
+            {
+                name: "LineupX",
+                tagline: "AI-Powered Placement Automation",
+                color: "#0ea5e9",
+                best: "Mid-size Colleges",
+                pricing: "Custom",
+                support: "✦ Dedicated",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "✓",
+                    "AI Resume Parsing & Shortlisting": "✓",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "✓",
+                    "AI Mock Interviews": "✓",
+                    "Anti-Cheating / Proctoring": "~",
+                    "Technical Coding Tests": "~",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "✓",
+                    "Virtual Career Fairs": "~",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "✓",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "~",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "~",
+                    "API Access": "~",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✗",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "~",
+                    "Dedicated College Mobile App": "~",
+                }
+            },
+            {
+                name: "Creatrix Campus",
+                tagline: "Cloud ERP + Placement System",
+                color: "#10b981",
+                best: "Institutions needing full ERP",
+                pricing: "Custom",
+                support: "✦ Available",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "✓",
+                    "AI Resume Parsing & Shortlisting": "~",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "~",
+                    "AI Mock Interviews": "✗",
+                    "Anti-Cheating / Proctoring": "✗",
+                    "Technical Coding Tests": "✗",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "✓",
+                    "Virtual Career Fairs": "✗",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "✓",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "✓",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "✓",
+                    "API Access": "✓",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✗",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "✗",
+                    "Dedicated College Mobile App": "✗",
+                }
+            },
+            {
+                name: "Reculta",
+                tagline: "Data-Driven Campus Placements",
+                color: "#f59e0b",
+                best: "Analytics-focused Institutes",
+                pricing: "Custom",
+                support: "✦ Available",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "~",
+                    "AI Resume Parsing & Shortlisting": "✓",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "~",
+                    "AI Mock Interviews": "✗",
+                    "Anti-Cheating / Proctoring": "✗",
+                    "Technical Coding Tests": "✗",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "✓",
+                    "Virtual Career Fairs": "~",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "✓",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "✓",
+                    "Mobile App (Student/TPO)": "~",
+                    "ERP / LMS Integration": "~",
+                    "API Access": "✓",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✗",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "~",
+                    "Dedicated College Mobile App": "✗",
+                }
+            },
+            {
+                name: "Eklavvya",
+                tagline: "AI Interview & Assessment Platform",
+                color: "#ec4899",
+                best: "Interview Prep & Assessments",
+                pricing: "₹500–1500/student/yr",
+                support: "✦ Available",
+                features: {
+                    "Student Profile Management": "~",
+                    "Job Posting & Management": "✗",
+                    "Application Tracking (ATS)": "✗",
+                    "Offer Letter Management": "✗",
+                    "AI Resume Parsing & Shortlisting": "~",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "~",
+                    "Built-in Skill Assessments": "✓",
+                    "AI Mock Interviews": "✓",
+                    "Anti-Cheating / Proctoring": "✓",
+                    "Technical Coding Tests": "✓",
+                    "Employer / Recruiter Portal": "~",
+                    "CRM for Corporate Relations": "✗",
+                    "Multi-Campus Outreach": "~",
+                    "Virtual Career Fairs": "✗",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "~",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "~",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "✓",
+                    "API Access": "✓",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✓",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "✗",
+                    "Dedicated College Mobile App": "✗",
+                }
+            },
+            {
+                name: "Zoho Recruit",
+                tagline: "General-Purpose ATS & Recruiting",
+                color: "#8b5cf6",
+                best: "Companies & Startups",
+                pricing: "Free tier + ₹1,250/mo+",
+                support: "✦ Available",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "✓",
+                    "AI Resume Parsing & Shortlisting": "✓",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "~",
+                    "AI Mock Interviews": "✗",
+                    "Anti-Cheating / Proctoring": "✗",
+                    "Technical Coding Tests": "✗",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "~",
+                    "Virtual Career Fairs": "✗",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "✗",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "✓",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "✓",
+                    "API Access": "✓",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✓",
+                    "Telegram Group Integration": "✗",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "~",
+                    "Dedicated College Mobile App": "~",
+                }
+            },
+            {
+                name: "Devcorp",
+                tagline: "Modern Campus Placement & ATS Platform",
+                color: "#14b8a6",
+                best: "Colleges & Universities",
+                pricing: "₹149/user/yr (T&C apply) + Flexible",
+                support: "✦ Dedicated",
+                features: {
+                    "Student Profile Management": "✓",
+                    "Job Posting & Management": "✓",
+                    "Application Tracking (ATS)": "✓",
+                    "Offer Letter Management": "~",
+                    "AI Resume Parsing & Shortlisting": "~",
+                    "Automated Interview Scheduling": "✓",
+                    "Automated Notifications & Alerts": "✓",
+                    "Bulk Email / Communication": "✓",
+                    "Built-in Skill Assessments": "✗",
+                    "AI Mock Interviews": "✗",
+                    "Anti-Cheating / Proctoring": "✗",
+                    "Technical Coding Tests": "✗",
+                    "Employer / Recruiter Portal": "✓",
+                    "CRM for Corporate Relations": "✓",
+                    "Multi-Campus Outreach": "✓",
+                    "Virtual Career Fairs": "✗",
+                    "Placement Analytics Dashboard": "✓",
+                    "NAAC/NIRF Reports": "~",
+                    "Real-Time Data Access": "✓",
+                    "Custom Report Builder": "~",
+                    "Mobile App (Student/TPO)": "✓",
+                    "ERP / LMS Integration": "✓",
+                    "API Access": "✓",
+                    "Dedicated Support Team": "✓",
+                    "Free Trial Available": "✓",
+                    "Telegram Group Integration": "✓",
+                    "Email Notifications": "✓",
+                    "Real-Time Broadcast Messaging": "✓",
+                    "Dedicated College Mobile App": "✓",
+                }
+            }
+        ];
+
+        const categoryColors = {
+            "Core": "#6366f1",
+            "Automation": "#0ea5e9",
+            "Assessment": "#ec4899",
+            "Recruiter": "#f59e0b",
+            "Analytics": "#10b981",
+            "Integration": "#8b5cf6",
+            "Support": "#64748b",
+            "Communication": "#f97316",
+        };
+
+        let activeCategory = "All";
+        let hoveredTool = null;
+
+        // Initialize
+        function init() {
+            renderCategoryFilter();
+            renderTable();
+            setupEventListeners();
+        }
+
+        // Render category filter
+        function renderCategoryFilter() {
+            const filterDiv = document.getElementById('categoryFilter');
+            const categories = ["All", ...Object.keys(categoryColors)];
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                if (cat === 'All') {
+                    btn.className += ' active';
+                } else {
+                    btn.setAttribute('data-category', cat);
+                    btn.style.setProperty('--category-color', categoryColors[cat]);
+                    btn.style.setProperty('--category-bg', categoryColors[cat] + '22');
+                }
+                btn.textContent = cat;
+                btn.onclick = () => selectCategory(cat);
+                filterDiv.appendChild(btn);
+            });
+        }
+
+        // Select category
+        function selectCategory(cat) {
+            activeCategory = cat;
+            
+            // Update button states
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === cat) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update table
+            updateTableVisibility();
+        }
+
+        // Update table visibility
+        function updateTableVisibility() {
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach((row, idx) => {
+                const label = row.getAttribute('data-label');
+                const category = row.getAttribute('data-category');
+                
+                if (label === 'category') {
+                    // Category row
+                    const isVisible = activeCategory === 'All' || category === activeCategory;
+                    row.style.display = isVisible ? '' : 'none';
+                } else if (label === 'feature') {
+                    // Feature row
+                    const isVisible = activeCategory === 'All' || category === activeCategory;
+                    row.style.display = isVisible ? '' : 'none';
+                } else {
+                    // Best For / Pricing rows always visible
+                    row.style.display = '';
+                }
+            });
+        }
+
+        // Render table
+        function renderTable() {
+            // Render headers
+            const headerRow = document.getElementById('toolHeaderRow');
+            const featureHeaderCell = document.createElement('th');
+            featureHeaderCell.className = 'feature-header';
+            featureHeaderCell.textContent = 'Feature';
+            headerRow.appendChild(featureHeaderCell);
+            
+            tools.forEach((tool, idx) => {
+                const th = document.createElement('th');
+                th.setAttribute('data-tool-idx', idx);
+                th.style.setProperty('--tool-color', tool.color);
+                th.style.setProperty('--tool-color-light', tool.color + '22');
+                th.style.setProperty('--tool-color-alpha', tool.color + '8f');
+                
+                const toolHeader = document.createElement('div');
+                toolHeader.className = 'tool-header';
+                
+                const icon = document.createElement('div');
+                icon.className = 'tool-icon';
+                icon.textContent = tool.name[0];
+                
+                const name = document.createElement('div');
+                name.className = 'tool-name';
+                name.textContent = tool.name;
+                
+                const tagline = document.createElement('div');
+                tagline.className = 'tool-tagline';
+                tagline.textContent = tool.tagline;
+                
+                toolHeader.appendChild(icon);
+                toolHeader.appendChild(name);
+                toolHeader.appendChild(tagline);
+                
+                th.appendChild(toolHeader);
+                th.onmouseenter = () => hoverTool(tool.name, idx);
+                th.onmouseleave = () => unhoverTool();
+                
+                headerRow.appendChild(th);
+            });
+            
+            // Render body
+            const tbody = document.getElementById('tableBody');
+            let lastCategory = null;
+            
+            features.forEach((feat) => {
+                // Add category row if new category
+                if (feat.category !== lastCategory) {
+                    const categoryRow = document.createElement('tr');
+                    categoryRow.setAttribute('data-label', 'category');
+                    categoryRow.setAttribute('data-category', feat.category);
+                    categoryRow.style.padding = '10px 20px 6px';
+                    
+                    const td = document.createElement('td');
+                    td.colSpan = tools.length + 1;
+                    td.className = 'category-row';
+                    td.style.color = categoryColors[feat.category] || '#6366f1';
+                    td.style.backgroundColor = (categoryColors[feat.category] || '#6366f1') + '10';
+                    td.textContent = '▸ ' + feat.category;
+                    
+                    categoryRow.appendChild(td);
+                    tbody.appendChild(categoryRow);
+                    
+                    lastCategory = feat.category;
+                }
+                
+                // Add feature row
+                const featureRow = document.createElement('tr');
+                featureRow.setAttribute('data-label', 'feature');
+                featureRow.setAttribute('data-category', feat.category);
+                
+                // Feature label cell
+                const featureTd = document.createElement('td');
+                featureTd.className = 'feature-cell';
+                featureTd.textContent = feat.label;
+                featureRow.appendChild(featureTd);
+                
+                // Tool feature cells
+                tools.forEach((tool, idx) => {
+                    const val = tool.features[feat.label] || '✗';
+                    const td = document.createElement('td');
+                    td.className = 'data-cell';
+                    td.setAttribute('data-tool-idx', idx);
+                    td.style.setProperty('--tool-hover-bg', tool.color + '0d');
+                    
+                    const span = document.createElement('span');
+                    span.className = 'feature-symbol';
+                    
+                    if (val === '✓') {
+                        span.className += ' symbol-full';
+                        span.textContent = '✓';
+                    } else if (val === '~') {
+                        span.className += ' symbol-partial';
+                        span.textContent = '◑';
+                    } else {
+                        span.className += ' symbol-none';
+                        span.textContent = '✗';
+                    }
+                    
+                    td.appendChild(span);
+                    featureRow.appendChild(td);
+                });
+                
+                tbody.appendChild(featureRow);
+            });
+            
+            // Add Best For row
+            const bestForRow = document.createElement('tr');
+            const bestForLabel = document.createElement('td');
+            bestForLabel.className = 'best-for-row best-for-row sticky';
+            bestForLabel.textContent = '🎯 Best For';
+            bestForRow.appendChild(bestForLabel);
+            
+            tools.forEach((tool, idx) => {
+                const td = document.createElement('td');
+                td.className = 'best-for-data';
+                td.setAttribute('data-tool-idx', idx);
+                td.style.color = tool.color;
+                td.textContent = tool.best;
+                bestForRow.appendChild(td);
+            });
+            
+            tbody.appendChild(bestForRow);
+            
+            // Add Pricing row
+            const pricingRow = document.createElement('tr');
+            const pricingLabel = document.createElement('td');
+            pricingLabel.className = 'pricing-row pricing-row sticky';
+            pricingLabel.textContent = '💰 Pricing';
+            pricingRow.appendChild(pricingLabel);
+            
+            tools.forEach((tool, idx) => {
+                const td = document.createElement('td');
+                td.className = 'pricing-data';
+                td.setAttribute('data-tool-idx', idx);
+                td.textContent = tool.pricing;
+                pricingRow.appendChild(td);
+            });
+            
+            tbody.appendChild(pricingRow);
+        }
+
+        // Hover tool
+        function hoverTool(toolName, idx) {
+            hoveredTool = toolName;
+            
+            // Update headers
+            document.querySelectorAll('th').forEach(th => {
+                if (th.getAttribute('data-tool-idx') == idx) {
+                    th.classList.add('hovered');
+                }
+            });
+            
+            // Update data cells
+            document.querySelectorAll('td[data-tool-idx]').forEach(td => {
+                if (td.getAttribute('data-tool-idx') == idx) {
+                    td.classList.add('hovered');
+                }
+            });
+        }
+
+        // Unhover tool
+        function unhoverTool() {
+            hoveredTool = null;
+            
+            document.querySelectorAll('th.hovered').forEach(th => {
+                th.classList.remove('hovered');
+            });
+            
+            document.querySelectorAll('td.hovered').forEach(td => {
+                td.classList.remove('hovered');
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Already set up in renderCategoryFilter and renderTable
+        }
+
+        // Initialize on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>
